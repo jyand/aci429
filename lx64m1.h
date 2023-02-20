@@ -23,8 +23,6 @@
 
 // TODO: MCUCR?
 void Initialize() {
-        //PORTC |= (1 << HWMR) ;
-        //_delay_ms(DELAY) ;
         /* I/O pins direction */
         DDRB |= (1 << SCK) | (1 << MOSI) ;
         DDRB &= ~((1 << MISO) | (1 << RXFLAG) | (1 << TXFLAG)) ;
@@ -39,18 +37,4 @@ void Initialize() {
         SPCR &= ~(1 << SPR1) ;
         SPSR |= (1 << SPI2X) ;
         SoftMasterReset() ;
-        //_delay_ms(DELAY) ;
-        //PORTC &= ~(1 << HWMR) ;
 }
-
-/*void TimerInit() {
-        unsigned long period = 5 ;
-        TCNT0 = 0x0 ;
-        TIMSK1 = 0x0 ;
-        TCC1A = 0x0 ;
-        TCCR1B = 0x0 ;
-        OCR0A = (unsigned char)(period*(F_CPU/(1024UL*1000UL))+1) ;
-        TIMSK0 = 0x2 ;
-        TCCR0A = 0x2 ;
-        TCCR0B = 0x5 ;
-}*/

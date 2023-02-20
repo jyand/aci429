@@ -220,14 +220,11 @@ int main() {
         WriteTxFIFO(30) ;
         for(;;) {
                 asm("wdr ;") ;
-                WriteTxFIFO(30) ;
+                WriteTxFIFO(sizeof(TxQueue)) ;
                 _delay_ms(DELAY) ;
                 ProcessRx() ;
                 _delay_ms(DELAY) ;
                 Parrot() ;
-                /*for (uint8_t j = 0 ; j < sizeof(RxQueue) ; ++j) {
-                        DecodeRx(RxQueue[j]) ;
-                }*/
                 _delay_ms(DELAY) ;
                 sleep_disable() ;
         }
