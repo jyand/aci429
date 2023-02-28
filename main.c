@@ -210,6 +210,8 @@ void Parrot() {
         }
 }
 
+void main() __attribute__((noreturn)) ;
+
 int main() {
         asm("cli ; wdr ;") ;
         Initialize() ;
