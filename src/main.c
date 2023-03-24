@@ -13,7 +13,7 @@ volatile unsigned char LED_2_ = (1 << PINB6) ;
 struct ECSdata g_ecsdat ;
 
 void SPIWait() {
-        while(!(SPSR & (1 << SPIF))) {}
+        while (!(SPSR & (1 << SPIF))) {}
 }
 
 void SoftMasterReset() {
@@ -205,14 +205,14 @@ void DecodeRx(unsigned long word) {
 }
 
 void Parrot() {
-        for (uint8_t j = 0 ; j < sizeof(RxQueue) ; ++j) {
+        for (int8_t j = 0 ; j < sizeof(RxQueue) ; ++j) {
                 TxQueue[j] = RxQueue[j] ;
         }
 }
 
 void main() __attribute__((noreturn)) ;
 
-int main() {
+void main() {
         asm("cli ; wdr ;") ;
         Initialize() ;
         WriteACLKDiv(1) ;
@@ -222,11 +222,9 @@ int main() {
         WriteTxFIFO(30) ;
         for(;;) {
                 asm("wdr ;") ;
-                WriteTxFIFO(sizeof(TxQueue)) ;
+                WriteTxFIFO(30) ;
                 _delay_ms(DELAY) ;
                 ProcessRx() ;
-                _delay_ms(DELAY) ;
-                Parrot() ;
                 _delay_ms(DELAY) ;
                 sleep_disable() ;
         }
