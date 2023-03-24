@@ -2,7 +2,7 @@
 #include "aci429.h"
 #include "ecsctl.h"
 
-const unsigned short CTL_REG_INITIAL = 0xE838U ;//0x603C ;
+static const unsigned short CTL_REG_INITIAL = 0xE838U ;//0x603C ;
 
 unsigned long TxQueue[32] ;
 unsigned long RxQueue[32] ;
@@ -12,7 +12,7 @@ volatile unsigned char LED_2_ = (1 << PINB6) ;
 
 struct ECSdata g_ecsdat ;
 
-void SPIWait() {
+inline void SPIWait() {
         while (!(SPSR & (1 << SPIF))) {}
 }
 
@@ -78,7 +78,7 @@ unsigned short ReadCtlReg() {
         return (((short)upper) << 8) | (short)lower ;
 }
 
-void WriteCtlReg (unsigned short halfword) {
+void WriteCtlReg(unsigned short halfword) {
         PORTC &= ~(1 << SELECT) ;
         unsigned char dum = SPSR ;
         SPDR = WRITE_CTLREG  ;
@@ -224,7 +224,7 @@ void main() {
                 asm("wdr ;") ;
                 WriteTxFIFO(30) ;
                 _delay_ms(DELAY) ;
-                ProcessRx() ;
+                //ProcessRx() ;
                 _delay_ms(DELAY) ;
                 sleep_disable() ;
         }
